@@ -1,0 +1,126 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled7.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyMh+wnEgLQzY93VfjF9anT2",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/yuhaeun-la/ML-/blob/master/ReLU%20%EC%9D%B4%EC%9A%A9\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Pn9Z0yzxD6Iv",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 134
+        },
+        "outputId": "1fae1ea2-cc46-48d5-dc53-231ebd87cfb4"
+      },
+      "source": [
+        "import tensorflow.compat.v1 as tf\n",
+        "tf.disable_v2_behavior() \n",
+        "import numpy as np\n",
+        "\n",
+        "x_data=np.array([[0,0],[1,0],[1,1],[0,0],[0,0],[0,1]])\n",
+        "#레이블=분류값,원핫인코딩으로\n",
+        "\n",
+        "y_data=np.array([\n",
+        "                 [1,0,0],\n",
+        "                 [0,1,0],\n",
+        "                 [0,0,1],\n",
+        "                 [1,0,0],\n",
+        "                 [1,0,0],\n",
+        "                 [0,0,1],\n",
+        "])\n",
+        "#이상으로 학습데이터정의를 마쳤다.\n",
+        "#이제 신경망 모델를 구성해 볼건데, 특징 x와 레이블 y와의 관계를 알아내는 모델입니다. \n",
+        "\n",
+        "X=tf.placeholder(tf.float32)\n",
+        "Y=tf.placeholder(tf.float32)\n",
+        "\n",
+        "#그 다음에 앞서배운 신경망을 결성하는 가중치와 편향변수를 설정한다. 신경망은 이 변수들의 값을 여러가지로 바꿔가면서 x와 y의 연관관계를 학습하게 됩니다.\n",
+        "\n",
+        "W=tf.Variable(tf.random_uniform([2,3],-1.,1.))\n",
+        "b=tf.Variable(tf.zeros([3])\n",
+        "#편향변수 b는 레이블 수인 3개의 요소를 가진 변수로 설정을 하고, 이 가중치를 곱하고 편향을 더한 결과를 활성화 함수인 ReLU에 적용하면 신경망 구성은 끝입니다.\n",
+        "L=tf.add(tf.matmul(X,W),b)\n",
+        "L=tf.nn.relu(L)\n",
+        "\n",
+        "#신경망 구성 완료, 신경망을 통해 나온 출력값을 softmax 함수를 이용해 사용하기 쉽게 다듬어 준다.\n",
+        "model=tf.nn.softmax(L)\n",
+        "#손실함수 작성- 손실함수는 원-핫 인코딩을 이용한 대부분의 모델에서 사용하는 교차엔트로피 함수를 사용합니다. 교차 엔트로피 값은 예측값과 실제값 사이의 확률분포 차이를 계산한 값으로, 기본 코드는 다음과 같습니다.\n",
+        "cost=tf.reduce_mean(-tf.reduce_sum(Y*tf.log(model),axis=1))\n",
+        "\n",
+        "#기본적인 경사하강법으로 최적화 합니다.\n",
+        "optimizer=tf.train.GradientDescentOptimizer(learning_rate=0.01)\n",
+        "train_op=optimizer.minimize(cost)\n",
+        "\n",
+        "#텐서플로우의 세션을 초기화합니다.\n",
+        "init=tf.global_variables_initializer()\n",
+        "sess=tf.Session()\n",
+        "sess.run(init)\n",
+        "\n",
+        "for step in range(100):\n",
+        "  sess.run(train_op,feed_dict={X:x_data, Y:y_data})\n",
+        "\n",
+        "  if (step+1)%10 == 0:\n",
+        "    print(step+1,sess.run(cost,feed_dict={X::x_data, Y:y_data}))\n",
+        "\n",
+        "\n",
+        "#마지막으로 학습된 결과를 확인해보는 코드\n",
+        "prediction=tf.argmax(model,axis=1)\n",
+        "target=tf.argmax(Y,axis=1)\n",
+        "print('예측값:',sess.run(prediction,feed_dict={X:x_data}))\n",
+        "print('실제값:',sess.run(target,feed_dict{Y:y_data}))\n",
+        "\n",
+        "is_correct=tf.equal(prediction,target)\n",
+        "accuracy=tf.reduce_mean(tf.cast(is_correct,tf.float32))\n",
+        "\n",
+        "print('정확도:%.2f'%sess.run(accuracy*100,feed_dict={X:x_data, Y:y_data}))"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "SyntaxError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-15-e93812ebc31d>\"\u001b[0;36m, line \u001b[0;32m27\u001b[0m\n\u001b[0;31m    L=tf.add(tf.matmul(X,W),b)\u001b[0m\n\u001b[0m    ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m invalid syntax\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Dy7w9UNzG43Z",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
