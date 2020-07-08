@@ -1,0 +1,124 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled11.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyMXjXNHxdjYPLO1BWSvzWCy",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/yuhaeun-la/ML-/blob/master/%EC%99%84%EC%84%B1!%20%ED%84%B8%20%EB%82%A0%EA%B0%9C%EA%B0%80%20%EC%9E%88%EB%8A%90%EB%83%90%EB%A5%BC%20%EA%B8%B0%EC%A4%80%EC%9C%BC%EB%A1%9C%20%EC%A1%B0%EB%A5%98%20%ED%8F%AC%EC%9C%A0%EB%A5%98%20%EA%B5%AC%EB%B3%84%ED%95%98%EB%8A%94%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "GE9kJJbNf9eK",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab_type": "code",
+        "id": "Dr4LC-nEgY5Q",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 248
+        },
+        "outputId": "a94368b9-2768-4c02-9d83-94dc3a080bb8"
+      },
+      "source": [
+        "# 털,날개가 있느냐를 기준으로 포유류와 조류를 구분하는 신경망 모델\n",
+        "\n",
+        "import tensorflow.compat.v1 as tf\n",
+        "tf.disable_v2_behavior() \n",
+        "import numpy as np\n",
+        "\n",
+        "x_data=np.array([[0,0],[1,0],[1,1],[0,0],[0,0],[0,1]])\n",
+        "y_data=np.array([[1,0,0],[0,1,0],[0,0,1],[1,0,0],[1,0,0],[0,0,1]])\n",
+        "\n",
+        "X=tf.placeholder(tf.float32)\n",
+        "Y=tf.placeholder(tf.float32)\n",
+        "\n",
+        "W1=tf.Variable(tf.random_uniform([2,10],-1.,1.))\n",
+        "W2=tf.Variable(tf.random_uniform([10,3],-1.,1.))\n",
+        "\n",
+        "b1=tf.Variable(tf.zeros([10]))\n",
+        "b2=tf.Variable(tf.zeros([3]))\n",
+        "\n",
+        "L1=tf.add(tf.matmul(X,W1),b1)\n",
+        "L1=tf.nn.relu(L1)\n",
+        "\n",
+        "model=tf.add(tf.matmul(L1,W2),b2)\n",
+        "#신경망을 통해 나온 출력값을 SOFTMAX 함수를 이용하여 사용하기 쉽게 다듬어준다.\n",
+        "\n",
+        "cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y,logits=model))\n",
+        "#텐서플로가 기본 제공하는 교차 엔트로피 함수를 이용해보았습니다. \n",
+        "optimizer=tf.train.AdamOptimizer(learning_rate=0.01)\n",
+        "train_op=optimizer.minimize(cost)\n",
+        "\n",
+        "init=tf.global_variables_initializer()\n",
+        "sess=tf.Session()\n",
+        "sess.run(init)\n",
+        "\n",
+        "for step in range(100):\n",
+        "  sess.run(train_op, feed_dict={X:x_data, Y:y_data})\n",
+        "\n",
+        "  if (step+1)%10==0:\n",
+        "    print(step+1, sess.run(cost,feed_dict={X:x_data, Y:y_data}))\n",
+        "\n",
+        "prediction=tf.argmax(model,axis=1)\n",
+        "target=tf.argmax(Y,axis=1)\n",
+        "print('예측값:', sess.run(prediction, feed_dict={X:x_data}))\n",
+        "print('실젯값:', sess.run(target,feed_dict={Y:y_data}))\n",
+        "\n",
+        "is_correct=tf.equal(prediction,target)\n",
+        "accuracy=tf.reduce_mean(tf.cast(is_correct,tf.float32))\n",
+        "print('정확도:%.2f'%sess.run(accuracy*100,feed_dict={X:x_data, Y:y_data}))"
+      ],
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "10 0.6978452\n",
+            "20 0.52115417\n",
+            "30 0.38476124\n",
+            "40 0.2753044\n",
+            "50 0.19062328\n",
+            "60 0.12772624\n",
+            "70 0.08558988\n",
+            "80 0.05894272\n",
+            "90 0.042408094\n",
+            "100 0.031947676\n",
+            "예측값: [0 1 2 0 0 2]\n",
+            "실젯값: [0 1 2 0 0 2]\n",
+            "정확도:100.00\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    }
+  ]
+}
