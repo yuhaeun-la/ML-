@@ -1,0 +1,109 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled13.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyO/FSqLsiKo4YFCKtX2KPzr",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/yuhaeun-la/ML-/blob/master/3%EB%B6%84%EB%94%A5%EB%9F%AC%EB%8B%9D-ch.5%20%EC%8B%A4%EC%8A%B5\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Ahvo8NOlkkpO",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 106
+        },
+        "outputId": "d44de38d-987a-4374-cab3-4019dffab792"
+      },
+      "source": [
+        "import tensorflow.compat.v1 as tf\n",
+        "tf.disable_v2_behavior() \n",
+        "import numpy as np\n",
+        "\n",
+        "data = np.loadtxt('./data.csv',delimiter=',',unpack=True,dtype='float32')\n",
+        "x_data=np.transpose(data[0:2])\n",
+        "y_data=np.transpose(data[2:])\n",
+        "\n",
+        "global_step=tf.Variable(0,trainable=False,name='global_step')\n",
+        "\n",
+        "X=tf.placeholder(tf.float32)\n",
+        "Y=tf.placeholder(tf.float32)\n",
+        "\n",
+        "W1=tf.Variable(tf.random_uniform([2,10],-1.,1.))\n",
+        "L1=tf.nn.relu(tf.matmul(X,W1))\n",
+        "\n",
+        "W2=tf.Variable(tf.random_uniform([10,20],-1.,1.))\n",
+        "L2=tf.nn.relu(tf.matmul(L1,W2))\n",
+        "\n",
+        "W3=tf.Variable(tf.random_uniform([20,3],-1.,1.))\n",
+        "model=tf.matmul(L2,W3)\n",
+        "\n",
+        "cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=model))\n",
+        "\n",
+        "optimizer=tf.train.AdamOptimizer(learning_rate=0.01)\n",
+        "train_op=optimizer.minimize(cost,global_step=global_step)\n",
+        "\n",
+        "sess = tf.Session()\n",
+        "\n",
+        "saver=tf.train.Saver(tf.global_variables())\n",
+        "\n",
+        "ckpt=tf.train.get_checkpoint_state('./model')\n",
+        "if ckpt and tf.train.ceckpoint_exists(ckpt.model_checkpoint_path):\n",
+        "  saver.restore(sess,ckpt.model_checkpoint_path)\n",
+        "else:\n",
+        "  sess.run(tf.global_variables_initializer())\n",
+        "\n",
+        "for step in range(2):\n",
+        "  sess.run(train_op,feed_dict={X:x_data,Y:y_data})\n",
+        "\n",
+        "  print('Step:%d,' %sess.run(global_step),\n",
+        "        'Cost:%.3f'%sess.run(cost,feed_dict={X:x_data,Y:y_data}))\n",
+        "\n",
+        "saver.save(sess,'./model/dnn.ckpt,global_step=global_step')\n",
+        "\n",
+        "prediction=tf.argmax(model,1)\n",
+        "target=tf.argmax(Y,1)\n",
+        "print('예측값:',sess.run(prediction,feed_dict={X:x_data}))\n",
+        "print('실제값:',sess.run(target,feed_dict={Y:y_data}))\n",
+        "\n",
+        "is_correct=tf.equal(prediction,target)\n",
+        "accuracy=tf.reduce_mean(tf.cast(is_correct,tf.float32))\n",
+        "print('정확도:%.2f'%sess.run(accuracy*100,feed_dict={X:x_data,Y:y_data}))"
+      ],
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Step:1, Cost:1.064\n",
+            "Step:2, Cost:1.003\n",
+            "예측값: [0 2 2 0 1]\n",
+            "실제값: [0 1 2 0 2]\n",
+            "정확도:60.00\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    }
+  ]
+}
