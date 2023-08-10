@@ -1,12 +1,9 @@
-![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=250&section=header&text=YUHAEUN%20&fontSize=90)
+![스크린샷 2023-08-10 오전 10 41 13](https://github.com/APPSCHOOL3-iOS/project01-team06/assets/65907001/23fb8fc1-1ffe-4df5-99b6-05382d96a2b3)
+
 
 <div align="center">
-  <h2>I'm YUHAEUN, an iOS Developer</h2>
+  <h2>I'm YUHAEUN, an iOS Junior Developer</h2>
 </div>
-
-<p align="center">
-  <img src="https://github.com/APPSCHOOL3-iOS/HellPartyDocs/assets/65907001/c8958e8c-94c0-46e2-8cdb-19d2bc54f060" alt="Profile Image">
-</p>
 
 ### Contact
 
@@ -35,6 +32,7 @@ Techit iOS App School Graduate, currently working on personal projects, member o
 
 ![UIKit](https://img.shields.io/badge/UIKit-167EFB?style=flat-square&logo=swift&logoColor=white)
 ![SwiftUI](https://img.shields.io/badge/SwiftUI-0096FF?style=flat-square&logo=swift&logoColor=white)
+![Swift](https://img.shields.io/badge/Swift-FA7343?style=flat-square&logo=swift&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white)
 
 #### Machine Learning / Deep Learning
@@ -43,7 +41,6 @@ Techit iOS App School Graduate, currently working on personal projects, member o
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white)
-![Swift](https://img.shields.io/badge/Swift-FA7343?style=flat-square&logo=swift&logoColor=white)
 
 #### Tools
 
