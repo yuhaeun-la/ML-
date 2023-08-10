@@ -24,6 +24,9 @@ Techit iOS App School Graduate, currently working on personal projects, member o
 - iOS Development
 - SwiftUI
 
+### Blog
+[유하은의 iOS 공부 일지](https://www.notion.so/YUHAEUN-052c651f10a24da7876aa19576d555ae?pvs=4)
+
 ---
 
 ## Skills
@@ -33,7 +36,6 @@ Techit iOS App School Graduate, currently working on personal projects, member o
 ![UIKit](https://img.shields.io/badge/UIKit-167EFB?style=flat-square&logo=swift&logoColor=white)
 ![SwiftUI](https://img.shields.io/badge/SwiftUI-0096FF?style=flat-square&logo=swift&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white)
-![Swift](https://img.shields.io/badge/Swift-FA7343?style=flat-square&logo=swift&logoColor=white)
 
 #### Machine Learning / Deep Learning
 
@@ -41,6 +43,7 @@ Techit iOS App School Graduate, currently working on personal projects, member o
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white)
+![Swift](https://img.shields.io/badge/Swift-FA7343?style=flat-square&logo=swift&logoColor=white)
 
 #### Tools
 
@@ -81,5 +84,19 @@ B.S. in Information Security, Seoul Women's University (2016 - 2022)
   > 한국산업단지공단 협업 프로젝트 ‘빅데이터 분석 표창장’ 수상
   >> 한국 산업단지 공장들의 모든 데이터 <팩토리온 데이터> 전처리 및 분석
   >> **taeblo 시각화 웹페이지 배포**
-  >> Imbalance한 data를 조절하고 ML Model(catboost)과 Shap Value를 확인해 사고와 연관성이 높은 데이터들을 조사해 웹
+  >> Imbalance한 data를 조절하고 ML Model(catboost)과 Shap Value를 확인해 사고와 연관성이 높은 데이터들을 조사해 웹 페이지에 기재, tableo를 활용해 웹페이지 속 지도속 원하는 '지역'을 클릭하면 그 지역에 해당하는 공장을 사고율/가지고 있는 위독한 물질/(그 외는 보안법상 더 얘기할 수 없음) 등을 보기 편하게 구성
+  >> <팩토리온> 데이터 뿐만 아니라 근무하고 있는 노동자들의 2016~2022년 인식조사/만족도 설문조사 데이터를 같이 분석하고 넣어서 노동자들의 인식과 사고율의 관련성도 조사해 의미있는 결과 도출
+
+#### IOS
+
+- CGV 프로토타입 제작
+- 최종프로젝트 완료 대상 수료
+
+---
+
+### Etc
+
+- OPic IH
+
+
 
